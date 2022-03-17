@@ -1,5 +1,9 @@
 from tkinter import *
 from PIL import ImageTk,Image
+from tkinter import messagebox
+
+import mainpage
+
 
 root = Tk()
 root.title('Soccer Ratings')
@@ -11,7 +15,7 @@ resize_image = image.resize((350, 100))
 img = ImageTk.PhotoImage(resize_image)
 # Display the image
 my_label = Label(root, image=img)
-my_label.grid(row=0, column=0,columnspan=3)
+my_label.grid(row=0, column=0,columnspan=2)
 
 #myButton = Button(root, text="Click me!",padx=25, pady=25,bg="#ffffff")
 #myButton.grid(row=2, column=2)
@@ -19,6 +23,10 @@ my_label.grid(row=0, column=0,columnspan=3)
 frame = LabelFrame(root, padx=100, pady=100)
 frame.grid(row=1, column=1)
 
+def funzione(testo):
+    if testo == "ciao":
+        messagebox.showerror("Error","Credentials not valid, please retry.")
+    return
 
 user_label = Label(frame, text="Username")
 pass_label = Label(frame, text="Password")
@@ -31,11 +39,11 @@ user_entry.grid(row=2,column=2)
 space_label1.grid(row=3,column=1)
 pass_label.grid(row=4,column=1)
 pass_entry.grid(row=4,column=2)
-login_button = Button(frame, text="Login",padx=25, pady=10,bg="#4eb6b0")
+login_button = Button(frame, text="Login",padx=25, pady=10,bg="#4eb6b0",command=lambda: funzione(str(user_entry.get())))
 space_label2.grid(row=5,column=1)
 login_button.grid(row=6, column=2)
 
-space_label5 = Label(frame,text="\n"+"\n")
+space_label5 = Label(frame, text="\n"+"\n")
 space_label5.grid(row=7, column=1)
 
 user_label2 = Label(frame, text="Username")
@@ -58,9 +66,6 @@ space_label6 = Label(frame, text="                                             "
 
 space_label13 = Label(frame,text="\n"+"\n")
 #space_label13.grid(row=13, column=1)
-
-
-
 
 
 
