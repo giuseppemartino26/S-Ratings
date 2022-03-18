@@ -1,20 +1,19 @@
 from tkinter import *
 
 #import Login
+#import main
+#from main import *
+#import main
+#from Login import *
 
-from Login import *
 #from Login import Login
 
 
 class Panel:
 
-
-
-
-    def __init__(self, root, frame):
-        self.root = root
+    def __init__(self, frame):
+        #self.root = root
         self.frame = frame
-
 
 
         label_insert_p = Label(frame, text="Insert a new player to the team")
@@ -42,8 +41,17 @@ class Panel:
         space_label5.grid(row=11, column=1)
 
 
-        trend_button = Button(frame, text="View a player's performance trend", padx=25, pady=10, bg="#1d434e", fg="white")
+        trend_button = Button(frame, text="View a player's performance trend", padx=25, pady=10, bg="#1d434e", fg="white",command= self.indietro)
         trend_button.grid(row=12, column=1)
+
+    def indietro(self):
+        self.frame.grid_forget()
+
+
+
+
+
+
 
 
 
