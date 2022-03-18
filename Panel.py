@@ -1,12 +1,5 @@
 from tkinter import *
 
-#import Login
-#import main
-#from main import *
-#import main
-#from Login import *
-
-#from Login import Login
 
 
 class Panel:
