@@ -4,7 +4,7 @@ from tkinter import messagebox
 
 from Login import *
 from Rating import Rating
-from prova import Database
+from database import Database
 
 db = Database()
 

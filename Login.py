@@ -6,7 +6,7 @@ from tkinter import messagebox
 import tkinter.font as font
 import mysql.connector
 
-mydb = mysql.connector.connect(
+"""mydb = mysql.connector.connect(
     host="localhost",
     user="root",
     password="root",
@@ -16,7 +16,10 @@ mydb = mysql.connector.connect(
 
 #mydb.autocommit(True)
 mycursor = mydb.cursor()
-#user = str(user_entry.get())
+#user = str(user_entry.get())"""
+from database import Database
+
+db = Database()
 
 
 class Login:
@@ -33,8 +36,8 @@ class Login:
     def check(self, username, password):
         stmt = "SELECT count(*) FROM users WHERE Username = %s AND Password = %s"
         data = (username, password)
-        mycursor.execute(stmt, data)
-        result = mycursor.fetchall()
+        db.mycursor.execute(stmt, data)
+        result = db.mycursor.fetchall()
         if int(result[0][0]) >= 1:
             return True
         else:
@@ -43,8 +46,8 @@ class Login:
     def check_only_us(self, username):
         stmt = "SELECT count(*) FROM users WHERE Username = %s"
         data = [username]
-        mycursor.execute(stmt, data)
-        result = mycursor.fetchall()
+        db.mycursor.execute(stmt, data)
+        result = db.mycursor.fetchall()
         if int(result[0][0]) >= 1:
             return True
         else:
@@ -64,7 +67,7 @@ class Login:
         else:
             stmt = "INSERT INTO users (`Username`, `Password`) VALUES (%s,%s);"
             data = (username,password)
-            mycursor.execute(stmt,data)
+            db.mycursor.execute(stmt,data)
             messagebox.showinfo("Success","Successful Registration")
 
 
