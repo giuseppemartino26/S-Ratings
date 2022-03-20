@@ -1,13 +1,17 @@
 from tkinter import *
 import tkinter.font as font
 
+from Rating import Rating
 
 
 class Panel:
 
-    def __init__(self, frame):
-        #self.root = root
+    def __init__(self, root, frame):
+
+        self.root = root
         self.frame = frame
+
+        self.frame_rating = LabelFrame(self.root, pady=5, padx=5)
 
         myFont = font.Font(family='Calibri', size=14)
         myFont2 = font.Font(family='Calibri', size=12)
@@ -25,7 +29,7 @@ class Panel:
         button_insert_p.grid(row=4,column=2)
         space_label3.grid(row=7, column=1)
 
-        rating_button = Button(frame, text="Rate a player",padx=25, pady=10, bg="#1d434e", fg="white",font=myFont2)
+        rating_button = Button(frame, text="Rate a player",padx=25, pady=10, bg="#1d434e", fg="white",font=myFont2, command=self.open_rating)
         rating_button.grid(row=8, column=1)
         space_label4 = Label(frame, text="\n" + "\n")
         space_label4.grid(row=9,column=1)
@@ -41,6 +45,10 @@ class Panel:
 
     def indietro(self):
         self.frame.grid_forget()
+
+    def open_rating(self):
+        Rating(self.root, self.frame_rating)
+        self.frame_rating.grid(row=2, column=1)
 
 
 
