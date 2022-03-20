@@ -1,30 +1,72 @@
 from tkinter import *
 import tkinter.font as font
+from tkinter import messagebox
 
+from Login import *
 from Rating import Rating
+from prova import Database
 
+db = Database()
 
 class Panel:
 
-    def __init__(self, root, frame):
+    def check_team(self, name, role):
+        stmt = "SELECT count(*) FROM teams WHERE Name = %s AND Role = %s"
+        data = (name, role)
+        db.mycursor.execute(stmt, data)
+
+        result = db.mycursor.fetchall()
+        if int(result[0][0]) >= 1:
+            return True
+        else:
+            return False
+
+    def add_player(self,name,role,username):
+        if self.check_team(name,role):
+            messagebox.showerror("Error", "The player is already present in the team")
+        else:
+            stmt = "INSERT INTO `soccer_ratings`.`teams` (`Name`, `Role`, `Username`) VALUES (%s, %s, %s);"
+            data = [name,role,username]
+            db.mycursor.execute(stmt,data)
+            messagebox.showinfo("Success","New player added in the team")
+
+
+    def __init__(self, root, frame, username):
 
         self.root = root
         self.frame = frame
+        self.username = username
 
         self.frame_rating = LabelFrame(self.root, pady=5, padx=5)
 
         myFont = font.Font(family='Calibri', size=14)
         myFont2 = font.Font(family='Calibri', size=12)
+        options = [
+            "Goalkeeper",
+            "Defensor",
+            "Difensive Midfielder",
+            "Midfielder",
+            "Attacking Midfielder",
+            "Forewarder"
+        ]
+
+        clicked = StringVar()
+        clicked.set("Select a role")
+        drop = OptionMenu(frame, clicked, *options)
+        drop.grid(row=4,column=0)
+
         label_insert_p = Label(frame, text="Insert a new player to the team",font=myFont)
+        label_insert_p.grid(row=2, column=1, columnspan=2)
         entry_insert_p = Entry(frame, width=25, font=myFont2)
-        button_insert_p = Button(frame, text="Insert", padx=25, pady=5, bg="#3bab5a", fg="white",font=myFont2)
+        entry_insert_p.grid(row=4, column=1)
+        button_insert_p = Button(frame, text="Insert", padx=25, pady=5, bg="#3bab5a", fg="white",font=myFont2,command=lambda: self.add_player(str(entry_insert_p.get()),str(clicked.get()), self.username))
         space_label1 = Label(frame, text=" ")
         space_label2 = Label(frame, text=" ")
         space_label3 = Label(frame, text="\n"+"\n")
 
-        label_insert_p.grid(row=2, column=1,columnspan=2)
+
         space_label1.grid(row=3,column=1)
-        entry_insert_p.grid(row=4,column=1)
+
         space_label2.grid(row=5,column=1)
         button_insert_p.grid(row=4,column=2)
         space_label3.grid(row=7, column=1)

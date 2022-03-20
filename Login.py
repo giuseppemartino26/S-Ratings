@@ -13,19 +13,22 @@ mydb = mysql.connector.connect(
     database="soccer_ratings"
 )
 
+
+#mydb.autocommit(True)
 mycursor = mydb.cursor()
+#user = str(user_entry.get())
 
 
 class Login:
 
-    def funzione(self, testo):
+    """def funzione(self, testo):
         if testo == "ciao":
             messagebox.showerror("Error", "Credentials not valid, please retry.")
 
         if testo == "hola":
             # frame.grid_forget()
             Panel(self.root, self.frame2)
-            self.frame2.grid(row=2, column=1)
+            self.frame2.grid(row=2, column=1)"""
 
     def check(self, username, password):
         stmt = "SELECT count(*) FROM users WHERE Username = %s AND Password = %s"
@@ -49,7 +52,7 @@ class Login:
 
     def log(self,username, password):
         if self.check(username, password):
-            Panel(self.root, self.frame2)
+            Panel(self.root, self.frame2, str(self.user_entry.get()))
             self.frame2.grid(row=2, column=1)
         else:
             messagebox.showerror("Error", "Credentials not valid, please retry.")
@@ -90,16 +93,19 @@ class Login:
         pass_label = Label(self.frame, text="Password: ", font=myFont)
         space_label1 = Label(self.frame, text=" ")
         space_label2 = Label(self.frame, text=" ")
-        user_entry = Entry(self.frame, width=17, font=myFont)
+
+        self.user_entry = Entry(self.frame, width=17, font=myFont)
+        self.user_entry.grid(row=2, column=2)
+
         pass_entry = Entry(self.frame, width=17, font=myFont, show='*')
         user_label.grid(row=2, column=1)
-        user_entry.grid(row=2, column=2)
+
         space_label1.grid(row=3, column=1)
         pass_label.grid(row=4, column=1)
         pass_entry.grid(row=4, column=2)
         # login_button = Button(self.frame, text="Login", padx=20, pady=7, bg="#4eb6b0", font=myFont, command=lambda: self.funzione(str(user_entry.get())))
         login_button = Button(self.frame, text="Login", padx=20, pady=7, bg="#4eb6b0", font=myFont,
-                              command=lambda: self.log(str(user_entry.get()), str(pass_entry.get())))
+                              command=lambda: self.log(str(self.user_entry.get()), str(pass_entry.get())))
 
         space_label2.grid(row=5, column=1)
         login_button.grid(row=6, column=2)
