@@ -1,3 +1,4 @@
+from datetime import datetime
 from tkinter import *
 import tkinter.font as font
 from tkinter import ttk
@@ -15,9 +16,10 @@ db = Database()
 
 class Rating:
 
-    def __init__(self, root, frame):
+    def __init__(self, root, frame, username):
         self.root = root
         self.frame = frame
+        self.username = username
         self.frame_empty = LabelFrame(self.frame, pady=250, padx=566)
         Label(self.frame_empty, text=" ").grid(row=1, column=1)
         self.frame_empty.grid(row=3, column=1)
@@ -57,8 +59,9 @@ class Rating:
         Radiobutton(self.frame,text="Yes",variable=var, value=1,font=myFont2).grid(row=2,column=2)
         Radiobutton(self.frame, text="No", variable=var, value=0,font=myFont2,command=self.display_mov).grid(row=2, column=3)"""
 
-        stmt = "SELECT Name FROM teams"
-        db.mycursor.execute(stmt)
+        stmt = "SELECT Name FROM teams WHERE Username = %s"
+        data_user = [str(self.username)]
+        db.mycursor.execute(stmt,data_user)
         result = db.mycursor.fetchall()
         # print(result)
 
@@ -82,9 +85,9 @@ class Rating:
         if role == 'Goalkeeper':
             self.display_gk()
         elif role == 'Defender':
-            self.display_mov(1)
+            self.display_mov(1,choice,role)
         else:
-            self.display_mov(0)
+            self.display_mov(0,choice,role)
 
     def back(self):
         self.frame.grid_forget()
@@ -106,7 +109,7 @@ class Rating:
         self.frame_gk.grid(row=3, column=1)
         self.frame_gk.tkraise()
 
-    def display_mov(self, defender):
+    def display_mov(self, defender, choice, role):
 
         self.frame_mov.forget()
 
@@ -329,7 +332,7 @@ class Rating:
                                                                float(flow_centrality.get()), float(flow_success.get()),
                                                                float(betweenness2goals.get()), win_var.get(),
                                                                lost_var.get(), int(minutes_played.get()),
-                                                               int(starter.get()), defender)).grid(row=20, column=3)
+                                                               int(starter.get()), defender, choice, role)).grid(row=20, column=3)
 
         self.frame_mov.grid(row=3, column=1)
         self.frame_mov.tkraise()
@@ -337,7 +340,7 @@ class Rating:
     def compute_rating(self, goals, assists, shotsont, chances2c, dribblings, touches, passes_acc, passes_inacc,
                        lballs_acc, lballs_inacc, grduels_w, aerials_w, poss_lost_w, clearances, interceptions, tackles,
                        rcards, countattack, b_centrality, closeness_centrality, flow_centrality, flow_success, b2goals,
-                       win, lost, minutes_played, starter, DF):
+                       win, lost, minutes_played, starter, DF, choice, role):
         input_data = [[goals, assists, shotsont, chances2c, dribblings, touches, passes_acc, passes_inacc,
                        lballs_acc, lballs_inacc, grduels_w, aerials_w, poss_lost_w, clearances, interceptions, tackles,
                        rcards, countattack, b_centrality, closeness_centrality, flow_centrality, flow_success, b2goals,
@@ -349,6 +352,16 @@ class Rating:
         text_final = f"The rating is {result[0]}"
 
         messagebox.showinfo("Rating result", text_final)
+
+        stmt5 = "INSERT INTO soccer_ratings.performance (`Username`, `Player`, `Date`, `rating`, `role`) VALUES (%s, %s, %s, %s, %s) "
+        data_insert = [self.username, choice, datetime.date(datetime.now()), int(result[0]), role]
+        db.mycursor.execute(stmt5,data_insert)
+
+
+
+
+
+
 
 
 

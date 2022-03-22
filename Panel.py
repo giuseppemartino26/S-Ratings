@@ -90,7 +90,7 @@ class Panel:
 
     def open_rating(self):
         #self.frame.grid_forget()
-        Rating(self.root, self.frame_rating)
+        Rating(self.root, self.frame_rating, self.username)
         self.frame_rating.grid(row=2, column=1)
 
 
