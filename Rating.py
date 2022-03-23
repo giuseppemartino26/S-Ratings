@@ -93,19 +93,98 @@ class Rating:
         self.frame.grid_forget()
 
     def display_gk(self):
-        Label(self.frame_gk, text="Goals").grid(row=0, column=0)
+        Label(self.frame_gk, text="Assists",font=self.myFont2).grid(row=0, column=0)
+        assists = Entry(self.frame_gk, width=5, font=self.myFont2)
+        assists.grid(row=1, column=0)
+
         Label(self.frame_gk,
-              text="                                                                                                                ").grid(
+              text="                                                    ").grid(
             row=0, column=1)
-        Label(self.frame_gk, text="Assists ").grid(row=0, column=2)
+
+        Label(self.frame_gk, text="Ground duels won", font=self.myFont2).grid(row=0, column=2)
+        grduels_w = Entry(self.frame_gk, width=5, font=self.myFont2)
+        grduels_w.grid(row=1, column=2)
+
         Label(self.frame_gk,
-              text="                                                                                                                ").grid(
+              text="                                                    ").grid(
             row=0, column=3)
-        Label(self.frame_gk, text="fouls").grid(row=0, column=4)
-        # Label(self.frame_gk, text="\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"\n"+"Goals").grid(row=1, column=0)
 
-        # Label(self.frame_gk, text="                                                                                                                                              Goals").grid(row=1, column=0)
+        Label(self.frame_gk, text="Ground duels lost", font=self.myFont2).grid(row=0, column=4)
+        grduels_l = Entry(self.frame_gk, width=5, font=self.myFont2)
+        grduels_l.grid(row=1, column=4)
 
+        Label(self.frame_gk,
+              text="                                                    ").grid(
+            row=0, column=5)
+
+        Label(self.frame_gk, text="Aerials won", font=self.myFont2).grid(row=0, column=6)
+        aerials_w = Entry(self.frame_gk, width=5, font=self.myFont2)
+        aerials_w.grid(row=1, column=6)
+
+        Label(self.frame_gk, text="\n"+"\n"+"\n"+"\n").grid(row=2, column=1)
+
+        Label(self.frame_gk, text="Aerials lost", font=self.myFont2).grid(row=3, column=0)
+        aerials_l = Entry(self.frame_gk, width=5, font=self.myFont2)
+        aerials_l.grid(row=4, column=0)
+
+        Label(self.frame_gk,
+              text="                                                    ").grid(
+            row=3, column=1)
+
+        Label(self.frame_gk, text="Dangerous mistakes", font=self.myFont2).grid(row=3, column=2)
+        d_mistakes = Entry(self.frame_gk, width=5, font=self.myFont2)
+        d_mistakes.grid(row=4, column=2)
+
+        Label(self.frame_gk,
+              text="                                                    ").grid(
+            row=3, column=3)
+
+        Label(self.frame_gk, text="Goals against"+"\n"+"outside the box", font=self.myFont2).grid(row=3, column=4)
+        goals_ag_otb = Entry(self.frame_gk, width=5, font=self.myFont2)
+        goals_ag_otb.grid(row=4, column=4)
+
+        Label(self.frame_gk,
+              text="                                                    ").grid(
+            row=3, column=5)
+
+        Label(self.frame_gk, text="Goals against" + "\n" + "inside the box", font=self.myFont2).grid(row=3, column=6)
+        goals_ag_itb = Entry(self.frame_gk, width=5, font=self.myFont2)
+        goals_ag_itb.grid(row=4, column=6)
+
+        Label(self.frame_gk, text="\n"+"\n"+"\n"+"\n").grid(row=5, column=1)
+
+        Label(self.frame_gk, text="Saves inside the box", font=self.myFont2).grid(row=6, column=0)
+        saves_itb = Entry(self.frame_gk, width=5, font=self.myFont2)
+        saves_itb.grid(row=7, column=0)
+
+        Label(self.frame_gk,
+              text="                                                    ").grid(
+            row=6, column=1)
+
+        Label(self.frame_gk, text="Saves outside the box", font=self.myFont2).grid(row=6, column=2)
+        saves_otb = Entry(self.frame_gk, width=5, font=self.myFont2)
+        saves_otb.grid(row=7, column=2)
+
+        Label(self.frame_gk,
+              text="                                                    ").grid(
+            row=6, column=3)
+
+        Label(self.frame_gk, text="Saved penalties", font=self.myFont2).grid(row=6, column=4)
+        saves_otb = Entry(self.frame_gk, width=5, font=self.myFont2)
+        saves_otb.grid(row=7, column=4)
+
+        Label(self.frame_gk,
+              text="                                                    ").grid(
+            row=6, column=5)
+
+        Label(self.frame_gk, text="Betweennes centrality", font=self.myFont2).grid(row=6, column=6)
+        betweennes_centrality = Entry(self.frame_gk, width=10, font=self.myFont2)
+        betweennes_centrality.grid(row=7, column=6)
+
+
+
+
+        self.frame_mov.grid_forget()
         self.frame_gk.grid(row=3, column=1)
         self.frame_gk.tkraise()
 
