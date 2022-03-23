@@ -11,7 +11,7 @@ db = Database()
 class Panel:
 
     def check_team(self, name, role, username):
-        stmt = "SELECT count(*) FROM teams WHERE Name = %s AND Role = %s AND Username = %s"
+        stmt = "SELECT count(*) FROM players WHERE Name = %s AND Role = %s AND Username = %s"
         data = (name, role, username)
         db.mycursor.execute(stmt, data)
 
@@ -25,7 +25,7 @@ class Panel:
         if self.check_team(name,role, username):
             messagebox.showerror("Error", "The player is already present in the team")
         else:
-            stmt = "INSERT INTO `soccer_ratings`.`teams` (`Name`, `Role`, `Username`) VALUES (%s, %s, %s);"
+            stmt = "INSERT INTO `soccer_ratings`.`players` (`Name`, `Role`, `Username`) VALUES (%s, %s, %s);"
             data = [name,role,username]
             db.mycursor.execute(stmt,data)
             messagebox.showinfo("Success","New player added in the team")
@@ -44,9 +44,7 @@ class Panel:
         options = [
             "Goalkeeper",
             "Defensor",
-            "Difensive Midfielder",
             "Midfielder",
-            "Attacking Midfielder",
             "Forewarder"
         ]
 

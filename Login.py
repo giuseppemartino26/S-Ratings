@@ -24,14 +24,6 @@ db = Database()
 
 class Login:
 
-    """def funzione(self, testo):
-        if testo == "ciao":
-            messagebox.showerror("Error", "Credentials not valid, please retry.")
-
-        if testo == "hola":
-            # frame.grid_forget()
-            Panel(self.root, self.frame2)
-            self.frame2.grid(row=2, column=1)"""
 
     def check(self, username, password):
         stmt = "SELECT count(*) FROM users WHERE Username = %s AND Password = %s"
