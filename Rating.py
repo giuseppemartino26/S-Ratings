@@ -23,8 +23,6 @@ class Rating:
         self.frame_empty = LabelFrame(self.frame, pady=250, padx=566)
         Label(self.frame_empty, text=" ").grid(row=1, column=1)
 
-        #prima era qua
-
         self.model = pickle.load(open('model_mov.sav', 'rb'))
         self.model_gk = pickle.load(open('model_gk.sav', 'rb'))
 
@@ -59,11 +57,7 @@ class Rating:
 
         Label(self.frame, text="\n").grid(row=1, column=0)
 
-        """Label(self.frame,text="Is the player a goalkeeper?",font=myFont2).grid(row=2,column=1)
-        global var
-        var = IntVar()
-        Radiobutton(self.frame,text="Yes",variable=var, value=1,font=myFont2).grid(row=2,column=2)
-        Radiobutton(self.frame, text="No", variable=var, value=0,font=myFont2,command=self.display_mov).grid(row=2, column=3)"""
+
 
         stmt = "SELECT Name FROM players WHERE Username = %s"
         data_user = [str(self.username)]

@@ -2,6 +2,9 @@ from tkinter import *
 import tkinter.font as font
 from tkinter import messagebox
 
+import numpy as np
+
+from Lineup import Lineup
 from Login import *
 from Rating import Rating
 from database import Database
@@ -39,6 +42,40 @@ class Panel:
         db.mycursor.execute(stmt_delete2,data_delete)
         messagebox.showinfo("Success", "Player deleted from your team")
 
+    def prova(self):
+        #stmt_p = " SELECT Player, group_concat(rating order by Date separator '') AS rating_list from performance group by Player"
+        stmt_p = "select p1.Player, avg(p1.rating) as avg_rating from Performance p1 where p1.role = 'Forewarder' and p1.Username = 'a' and (select count(*) from Performance p2 where p1.Player = p2.Player and p1.Date <= p2.Date) >=2 group by p1.Player"
+
+        db.mycursor.execute(stmt_p)
+        result_p = db.mycursor.fetchall()
+        print(result_p)
+
+        sorted_result = sorted(result_p, key=lambda tup: tup[1], reverse=True)
+        print(sorted_result)
+
+        """"#print(result_p)
+        player_list = []
+        rating_list = []
+        rating_list_tozip = []
+        for element in result_p:
+            player_list.append(element[0])
+            rating_list.append(element[1])
+
+        print(player_list)
+        print(rating_list)
+
+        for i in rating_list:
+            #print(np.array(list(i), dtype=int))
+            rating_list_tozip.append(np.array(list(i), dtype=int))
+
+        print(rating_list_tozip)
+
+        dictionary = dict(zip(player_list,rating_list_tozip))
+        print(dictionary)
+
+        print(rating_list_tozip[0][0])"""
+
+
 
     def __init__(self, root, frame, username):
 
@@ -47,6 +84,7 @@ class Panel:
         self.username = username
 
         self.frame_rating = LabelFrame(self.root, pady=5, padx=5)
+        self.frame_lineup = LabelFrame(self.root,pady=5, padx=5)
 
         myFont = font.Font(family='Calibri', size=14)
         myFont2 = font.Font(family='Calibri', size=12)
@@ -109,7 +147,7 @@ class Panel:
         space_label4 = Label(frame, text="\n" + "\n")
         space_label4.grid(row=9,column=1)
 
-        lineup_button = Button(frame, text="View the starting lineup", padx=25, pady=10, bg="#1d434e", fg="white",font=myFont2)
+        lineup_button = Button(frame, text="View the starting lineup", padx=25, pady=10, bg="#1d434e", fg="white",font=myFont2, command=self.open_lineup)
         lineup_button.grid(row=10, column=2)
         space_label5 = Label(frame, text="\n" + "\n")
         space_label5.grid(row=11, column=1)
@@ -125,6 +163,10 @@ class Panel:
         #self.frame.grid_forget()
         Rating(self.root, self.frame_rating, self.username)
         self.frame_rating.grid(row=2, column=1)
+
+    def open_lineup(self):
+        Lineup(self.root,self.frame_lineup, self.username)
+        self.frame_lineup.grid(row=2, column=1)
 
 
 
