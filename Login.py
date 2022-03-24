@@ -6,17 +6,7 @@ from tkinter import messagebox
 import tkinter.font as font
 import mysql.connector
 
-"""mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="soccer_ratings"
-)
 
-
-#mydb.autocommit(True)
-mycursor = mydb.cursor()
-#user = str(user_entry.get())"""
 from database import Database
 
 db = Database()

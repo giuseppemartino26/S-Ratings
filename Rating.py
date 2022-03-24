@@ -102,6 +102,8 @@ class Rating:
             self.display_mov(0,choice,role)
 
     def back(self):
+        self.frame_mov.grid_forget()
+        self.frame_gk.grid_forget()
         self.frame.grid_forget()
 
     def display_gk(self, choice, role):
@@ -121,9 +123,6 @@ class Rating:
               text="                                                    ").grid(
             row=0, column=3)
 
-        Label(self.frame_gk, text="Ground duels lost", font=self.myFont2).grid(row=0, column=4)
-        grduels_l = Entry(self.frame_gk, width=5, font=self.myFont2)
-        grduels_l.grid(row=1, column=4)
 
         Label(self.frame_gk,
               text="                                                    ").grid(
