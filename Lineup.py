@@ -23,7 +23,7 @@ class Lineup:
         sorted_result = sorted(result_p, key=lambda tup: tup[1], reverse=True)
 
         for i in range(num):
-            final_list.append(sorted_result[i][0])
+            final_list.append(sorted_result[i])
 
         return final_list
 
@@ -37,36 +37,38 @@ class Lineup:
             fw_list = self.compute_list(self.username,'Forewarder', 2)
             print(fw_list)
 
-            Label(self.frame_442, text= fw_list[0],font=self.myFont2).grid(row=6, column=2)
-            Label(self.frame_442, text= "        ").grid(row=6,column=3)
-            Label(self.frame_442, text=fw_list[1], font=self.myFont2).grid(row=6, column=4)
+            Label(self.frame_442, image=self.img_g).place(anchor='center', relx=0.5, rely=0.5)
 
-            Label(self.frame_442, text="\n"+"\n").grid(row=5, column=0)
+            Label(self.frame_442, text= fw_list[0][0] +"\n"+"("+ str(fw_list[0][1])+")",font=self.myFont2).grid(row=6, column=2)
+            Label(self.frame_442, text= "        ",bg="#7ec576").grid(row=6,column=3)
+            Label(self.frame_442, text=fw_list[1][0]+"\n"+"("+ str(fw_list[1][1])+")", font=self.myFont2).grid(row=6, column=4)
+
+            Label(self.frame_442, text="\n"+"\n",bg="#7ec576").grid(row=5, column=0)
 
             mf_list = self.compute_list(self.username, 'Midfielder', 4)
-            Label(self.frame_442, text=mf_list[0], font=self.myFont2).grid(row=4, column=0)
-            Label(self.frame_442, text="        ").grid(row=4, column=1)
-            Label(self.frame_442, text=mf_list[1], font=self.myFont2).grid(row=4, column=2)
-            Label(self.frame_442, text="        ").grid(row=4, column=3)
-            Label(self.frame_442, text=mf_list[2], font=self.myFont2).grid(row=4, column=4)
-            Label(self.frame_442, text="        ").grid(row=4, column=5)
-            Label(self.frame_442, text=mf_list[3], font=self.myFont2).grid(row=4, column=6)
+            Label(self.frame_442, text=mf_list[0][0]+"\n"+"("+ str(mf_list[0][1])+")", font=self.myFont2).grid(row=4, column=0)
+            Label(self.frame_442, text="        ",bg="#7ec576").grid(row=4, column=1)
+            Label(self.frame_442, text=mf_list[1][0]+"\n"+"("+ str(mf_list[1][1])+")", font=self.myFont2).grid(row=4, column=2)
+            Label(self.frame_442, text="        ",bg="#7ec576").grid(row=4, column=3)
+            Label(self.frame_442, text=mf_list[2][0]+"\n"+"("+ str(mf_list[2][1])+")", font=self.myFont2).grid(row=4, column=4)
+            Label(self.frame_442, text="        ",bg="#7ec576").grid(row=4, column=5)
+            Label(self.frame_442, text=mf_list[3][0]+"\n"+"("+ str(mf_list[3][1])+")", font=self.myFont2).grid(row=4, column=6)
 
-            Label(self.frame_442, text="\n" + "\n").grid(row=3, column=0)
+            Label(self.frame_442, text="\n" + "\n",bg="#7ec576").grid(row=3, column=0)
 
             df_list = self.compute_list(self.username, 'Defensor', 4)
-            Label(self.frame_442, text=df_list[0], font=self.myFont2).grid(row=2, column=0)
-            Label(self.frame_442, text="        ").grid(row=2, column=1)
-            Label(self.frame_442, text=df_list[1], font=self.myFont2).grid(row=2, column=2)
-            Label(self.frame_442, text="        ").grid(row=2, column=3)
-            Label(self.frame_442, text=df_list[2], font=self.myFont2).grid(row=2, column=4)
-            Label(self.frame_442, text="        ").grid(row=2, column=5)
-            Label(self.frame_442, text=df_list[3], font=self.myFont2).grid(row=2, column=6)
+            Label(self.frame_442, text=df_list[0][0]+"\n"+"("+ str(df_list[0][1])+")", font=self.myFont2).grid(row=2, column=0)
+            Label(self.frame_442, text="        ",bg="#7ec576").grid(row=2, column=1)
+            Label(self.frame_442, text=df_list[1][0]+"\n"+"("+ str(df_list[1][1])+")", font=self.myFont2).grid(row=2, column=2)
+            Label(self.frame_442, text="        ",bg="#7ec576").grid(row=2, column=3)
+            Label(self.frame_442, text=df_list[2][0]+"\n"+"("+ str(df_list[2][1])+")", font=self.myFont2).grid(row=2, column=4)
+            Label(self.frame_442, text="        ",bg="#7ec576").grid(row=2, column=5)
+            Label(self.frame_442, text=df_list[3][0]+"\n"+"("+ str(df_list[3][1])+")", font=self.myFont2).grid(row=2, column=6)
 
-            Label(self.frame_442, text="\n" + "\n").grid(row=1, column=0)
+            Label(self.frame_442, text="\n" + "\n",bg="#7ec576").grid(row=1, column=0)
 
-            df_list = self.compute_list(self.username, 'Goalkeeper', 1)
-            Label(self.frame_442, text=df_list[0], font=self.myFont2).grid(row=0, column=1, columnspan=5)
+            gk_list = self.compute_list(self.username, 'Goalkeeper', 1)
+            Label(self.frame_442, text=gk_list[0][0]+"\n"+"("+ str(gk_list[0][1])+")", font=self.myFont2).grid(row=0, column=1, columnspan=5)
 
 
 
@@ -88,13 +90,18 @@ class Lineup:
         Label(self.frame_empty, text=" ").grid(row=1, column=1)
         self.frame_empty.grid(row=3, column=1)
 
-        self.frame_442 = LabelFrame(self.frame, pady=5, padx=5)
+        self.frame_442 = LabelFrame(self.frame, pady=90, padx=5)
 
 
         image = Image.open("back2.png")
         # Resize the image using resize() method
         resize_image = image.resize((50, 50))
         self.img = ImageTk.PhotoImage(resize_image)
+
+        image_ground = Image.open("ground.png")
+        # Resize the image using resize() method
+        resize_image_g = image_ground.resize((680, 680))
+        self.img_g = ImageTk.PhotoImage(resize_image_g)
 
         self.myFont2 = font.Font(family='Calibri', size=12)
         self.myFont3 = font.Font(family='Calibri', size=14, weight='bold')
