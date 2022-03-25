@@ -2,6 +2,7 @@ from database import Database
 from tkinter import *
 from PIL import ImageTk, Image
 import tkinter.font as font
+from tkinter import messagebox
 
 db = Database()
 global clicked
@@ -16,14 +17,18 @@ class Lineup:
 
     def compute_list(self, username, role, num):
         final_list = []
-        stmt_p = "select p1.Player, avg(p1.rating) as avg_rating from Performance p1 where p1.role = %s and p1.Username = %s and (select count(*) from Performance p2 where p1.Player = p2.Player and p1.Date <= p2.Date) <=2 group by p1.Player"
+        stmt_p = "select p1.Player, avg(p1.rating) as avg_rating from Performance p1 where p1.role = %s and p1.Username = %s and (select count(*) from Performance p2 where p1.Player = p2.Player and p1.Date <= p2.Date) <=5 group by p1.Player"
         data_p = [role, username]
         db.mycursor.execute(stmt_p,data_p)
         result_p = db.mycursor.fetchall()
         sorted_result = sorted(result_p, key=lambda tup: tup[1], reverse=True)
 
         for i in range(num):
-            final_list.append(sorted_result[i])
+            try:
+                final_list.append(sorted_result[i])
+            except IndexError:
+                messagebox.showerror("Error","You don't have enough players in that role. Please, come back and add a new player in that role or try with another type of formation")
+                return
 
         return final_list
 

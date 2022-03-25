@@ -34,6 +34,7 @@ class Panel:
             data = [name,role,username]
             db.mycursor.execute(stmt,data)
             messagebox.showinfo("Success","New player added in the team")
+            Panel(self.root, self.frame, self.username)
 
 
     def delete_player(self,player_name, username):
@@ -113,9 +114,7 @@ class Panel:
         entry_insert_p.grid(row=4, column=2)
         button_insert_p = Button(frame, text="Insert new player", padx=25, pady=5, bg="#3bab5a", fg="white",font=myFont2,command=lambda: self.add_player(str(entry_insert_p.get()),str(clicked.get()), self.username))
         Label(frame, text="\n").grid(row=5, column=4)
-        Button(frame, text="Delete a player", padx=25, pady=5, bg="#c80031", fg="white",
-                                 font=myFont2,
-                                 command=lambda: self.delete_player(clicked_mod.get(),self.username)).grid(row=6, column=4)
+
 
         stmt6 = "SELECT Name FROM players WHERE Username = %s"
         data_mod = [str(self.username)]
@@ -123,15 +122,26 @@ class Panel:
         result_mod = db.mycursor.fetchall()
 
         Label(frame,text=" ").grid(row=6, column=3)
-
+        global clicked_mod
         options_mod = []
         for player_mod in result_mod:
             options_mod.append(player_mod[0])
-        global clicked_mod
-        clicked_mod = StringVar()
-        clicked_mod.set("Select the player to delete")
-        drop_mod = OptionMenu(frame, clicked_mod, *options_mod)
-        drop_mod.grid(row=6, column=2)
+
+        if options_mod:
+            clicked_mod = StringVar()
+            clicked_mod.set("Select the player to delete")
+            drop_mod = OptionMenu(frame, clicked_mod, *options_mod)
+            drop_mod.grid(row=6, column=2)
+            Button(frame, text="Delete a player", padx=25, pady=5, bg="#c80031", fg="white",
+                   font=myFont2,
+                   command=lambda: self.delete_player(clicked_mod.get(), self.username)).grid(row=6, column=4)
+        else:
+            options_mod.append("No available player to delete")
+            clicked_mod = StringVar()
+            clicked_mod.set("Select the player to delete")
+            drop_mod = OptionMenu(frame, clicked_mod, *options_mod)
+            drop_mod.grid(row=6, column=2)
+            Button(frame, text="Delete a player", padx=25, pady=5, bg="#c80031", fg="white", font=myFont2, state="disabled").grid(row=6, column=4)
 
 
 
@@ -159,18 +169,33 @@ class Panel:
         db.mycursor.execute(stmt_plot, data_plot)
         result_plot = db.mycursor.fetchall()
         # print(result)
-
+        global clicked_plot
         options_plot = []
         for player in result_plot:
             options_plot.append(player[0])
-        global clicked_plot
-        clicked_plot = StringVar()
-        clicked_plot.set("Select the player")
-        drop_plot = OptionMenu(frame, clicked_plot, *options_plot)
-        drop_plot.grid(row=10, column=1)
 
-        trend_button = Button(frame, text="View a player's performance trend", padx=25, pady=10, bg="#1d434e", fg="white",font=myFont2,command= lambda: self.plot_trend(self.username,clicked_plot.get()))
-        trend_button.grid(row=10, column=2)
+        if options_plot:
+
+            clicked_plot = StringVar()
+            clicked_plot.set("Select the player")
+            drop_plot = OptionMenu(frame, clicked_plot, *options_plot)
+            drop_plot.grid(row=10, column=1)
+            trend_button = Button(frame, text="View a player's performance trend", padx=25, pady=10, bg="#1d434e",
+                                  fg="white", font=myFont2,
+                                  command=lambda: self.plot_trend(self.username, clicked_plot.get()))
+            trend_button.grid(row=10, column=2)
+        else:
+            options_plot.append("No players available")
+            clicked_plot = StringVar()
+            clicked_plot.set("Select the player")
+            drop_plot = OptionMenu(frame, clicked_plot, *options_plot)
+            drop_plot.grid(row=10, column=1)
+            trend_button = Button(frame, text="View a player's performance trend", padx=25, pady=10, bg="#1d434e",
+                                  fg="white", font=myFont2, state="disabled")
+            trend_button.grid(row=10, column=2)
+
+
+
 
     def indietro(self):
         self.frame.grid_forget()
