@@ -8,6 +8,8 @@ from Lineup import Lineup
 from Login import *
 from Rating import Rating
 from database import Database
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 db = Database()
 
@@ -148,13 +150,27 @@ class Panel:
         space_label4.grid(row=9,column=1)
 
         lineup_button = Button(frame, text="View the starting lineup", padx=25, pady=10, bg="#1d434e", fg="white",font=myFont2, command=self.open_lineup)
-        lineup_button.grid(row=10, column=2)
+        lineup_button.grid(row=12, column=2)
         space_label5 = Label(frame, text="\n" + "\n")
         space_label5.grid(row=11, column=1)
 
+        stmt_plot = "SELECT Name FROM players WHERE Username = %s"
+        data_plot = [str(self.username)]
+        db.mycursor.execute(stmt_plot, data_plot)
+        result_plot = db.mycursor.fetchall()
+        # print(result)
 
-        trend_button = Button(frame, text="View a player's performance trend", padx=25, pady=10, bg="#1d434e", fg="white",font=myFont2,command= self.indietro)
-        trend_button.grid(row=12, column=2)
+        options_plot = []
+        for player in result_plot:
+            options_plot.append(player[0])
+        global clicked_plot
+        clicked_plot = StringVar()
+        clicked_plot.set("Select the player")
+        drop_plot = OptionMenu(frame, clicked_plot, *options_plot)
+        drop_plot.grid(row=10, column=1)
+
+        trend_button = Button(frame, text="View a player's performance trend", padx=25, pady=10, bg="#1d434e", fg="white",font=myFont2,command= lambda: self.plot_trend(self.username,clicked_plot.get()))
+        trend_button.grid(row=10, column=2)
 
     def indietro(self):
         self.frame.grid_forget()
@@ -167,6 +183,37 @@ class Panel:
     def open_lineup(self):
         Lineup(self.root,self.frame_lineup, self.username)
         self.frame_lineup.grid(row=2, column=1)
+
+
+    def plot_trend(self, username, choice_plot):
+        stmt = "SELECT Date, rating FROM soccer_ratings.performance where Username = %s and Player = %s order by Date"
+        data = [username,choice_plot]
+        db.mycursor.execute(stmt,data)
+        result = db.mycursor.fetchall()
+        print(result)
+
+        x=[]
+        y=[]
+        for element in result:
+            x.append(element[0])
+            y.append(element[1])
+
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+
+        plt.plot(x,y)
+        plt.title = choice_plot + "'s performance trend"
+
+        plt.gcf().autofmt_xdate()
+
+        plt.show()
+
+
+
+
+
+
+
 
 
 
