@@ -27,7 +27,7 @@ class Lineup:
             try:
                 final_list.append(sorted_result[i])
             except IndexError:
-                messagebox.showerror("Error","You don't have enough players in that role. Please, come back and add a new player in that role or try with another type of formation")
+                messagebox.showerror("Impossible to compute the formation","You don't have enough rated players in all the roles of this type of formation.")
                 return
 
         return final_list
@@ -41,7 +41,7 @@ class Lineup:
         if choice == '4-4-2':
             self.frame_442.grid_forget()
             self.frame_352.grid_forget()
-            fw_list = self.compute_list(self.username,'Forewarder', 2)
+            fw_list = self.compute_list(self.username,'Foreward', 2)
             print(fw_list)
 
             Label(self.frame_442, image=self.img_g).place(anchor='center', relx=0.5, rely=0.5)
@@ -63,7 +63,7 @@ class Lineup:
 
             Label(self.frame_442, text="\n" + "\n",bg="#7ec576").grid(row=3, column=0)
 
-            df_list = self.compute_list(self.username, 'Defensor', 4)
+            df_list = self.compute_list(self.username, 'Defender', 4)
             Label(self.frame_442, text=df_list[0][0]+"\n"+"("+ str(df_list[0][1])+")", font=self.myFont2).grid(row=2, column=0)
             Label(self.frame_442, text="        ",bg="#7ec576").grid(row=2, column=1)
             Label(self.frame_442, text=df_list[1][0]+"\n"+"("+ str(df_list[1][1])+")", font=self.myFont2).grid(row=2, column=2)
@@ -85,7 +85,7 @@ class Lineup:
         if choice == '4-3-3':
             self.frame_442.grid_forget()
             self.frame_352.grid_forget()
-            fw_list = self.compute_list(self.username,'Forewarder', 3)
+            fw_list = self.compute_list(self.username,'Foreward', 3)
             print(fw_list)
 
             Label(self.frame_433, image=self.img_g).place(anchor='center', relx=0.5, rely=0.5)
@@ -108,7 +108,7 @@ class Lineup:
 
             Label(self.frame_433, text="\n" + "\n",bg="#7ec576").grid(row=3, column=0)
 
-            df_list = self.compute_list(self.username, 'Defensor', 4)
+            df_list = self.compute_list(self.username, 'Defender', 4)
             Label(self.frame_433, text=df_list[0][0]+"\n"+"("+ str(df_list[0][1])+")", font=self.myFont2).grid(row=2, column=1)
             #Label(self.frame_442, text="        ",bg="#7ec576").grid(row=2, column=1)
             Label(self.frame_433, text=df_list[1][0]+"\n"+"("+ str(df_list[1][1])+")", font=self.myFont2).grid(row=2, column=2)
@@ -130,7 +130,7 @@ class Lineup:
         if choice == '3-5-2':
             self.frame_442.grid_forget()
             self.frame_433.grid_forget()
-            fw_list = self.compute_list(self.username,'Forewarder', 2)
+            fw_list = self.compute_list(self.username,'Foreward', 2)
 
 
             Label(self.frame_352, image=self.img_g).place(anchor='center', relx=0.5, rely=0.5)
@@ -154,7 +154,7 @@ class Lineup:
 
             Label(self.frame_352, text="\n" + "\n",bg="#7ec576").grid(row=3, column=0)
 
-            df_list = self.compute_list(self.username, 'Defensor',3)
+            df_list = self.compute_list(self.username, 'Defender',3)
             Label(self.frame_352, text=df_list[0][0]+"\n"+"("+ str(df_list[0][1])+")", font=self.myFont2).grid(row=2, column=0)
             Label(self.frame_442, text="  ", bg="#7ec576").grid(row=2, column=1)
             Label(self.frame_352, text=df_list[1][0]+"\n"+"("+ str(df_list[1][1])+")", font=self.myFont2).grid(row=2, column=2)

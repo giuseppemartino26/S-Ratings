@@ -29,6 +29,10 @@ class Panel:
     def add_player(self,name,role,username):
         if self.check_team(name,role, username):
             messagebox.showerror("Error", "The player is already present in the team")
+        elif name == "":
+            messagebox.showerror("Error", "Please, insert a name")
+        elif role == "Select a role":
+            messagebox.showerror("Error", "Please, select the role")
         else:
             stmt = "INSERT INTO `soccer_ratings`.`players` (`Name`, `Role`, `Username`) VALUES (%s, %s, %s);"
             data = [name,role,username]
@@ -44,6 +48,7 @@ class Panel:
         db.mycursor.execute(stmt_delete,data_delete)
         db.mycursor.execute(stmt_delete2,data_delete)
         messagebox.showinfo("Success", "Player deleted from your team")
+        Panel(self.root, self.frame, self.username)
 
     def prova(self):
         #stmt_p = " SELECT Player, group_concat(rating order by Date separator '') AS rating_list from performance group by Player"
@@ -56,27 +61,7 @@ class Panel:
         sorted_result = sorted(result_p, key=lambda tup: tup[1], reverse=True)
         print(sorted_result)
 
-        """"#print(result_p)
-        player_list = []
-        rating_list = []
-        rating_list_tozip = []
-        for element in result_p:
-            player_list.append(element[0])
-            rating_list.append(element[1])
 
-        print(player_list)
-        print(rating_list)
-
-        for i in rating_list:
-            #print(np.array(list(i), dtype=int))
-            rating_list_tozip.append(np.array(list(i), dtype=int))
-
-        print(rating_list_tozip)
-
-        dictionary = dict(zip(player_list,rating_list_tozip))
-        print(dictionary)
-
-        print(rating_list_tozip[0][0])"""
 
 
 
@@ -93,9 +78,9 @@ class Panel:
         myFont2 = font.Font(family='Calibri', size=12)
         options = [
             "Goalkeeper",
-            "Defensor",
+            "Defender",
             "Midfielder",
-            "Forewarder"
+            "Foreward"
         ]
 
         Label(frame, text="Modify your team:", font=myFont).grid(row=3, column=1)
@@ -211,27 +196,31 @@ class Panel:
 
 
     def plot_trend(self, username, choice_plot):
-        stmt = "SELECT Date, rating FROM soccer_ratings.performance where Username = %s and Player = %s order by Date"
-        data = [username,choice_plot]
-        db.mycursor.execute(stmt,data)
-        result = db.mycursor.fetchall()
-        print(result)
+        if choice_plot == "Select the player":
+            messagebox.showerror("Error","Please, select a player")
+        else:
+            stmt = "SELECT Date, rating FROM soccer_ratings.performance where Username = %s and Player = %s order by Date"
+            data = [username,choice_plot]
+            db.mycursor.execute(stmt,data)
+            result = db.mycursor.fetchall()
+            print(result)
 
-        x=[]
-        y=[]
-        for element in result:
-            x.append(element[0])
-            y.append(element[1])
+            x=[]
+            y=[]
+            for element in result:
+                x.append(element[0])
+                y.append(element[1])
 
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
-        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
+            plt.gca().xaxis.set_major_locator(mdates.DayLocator())
 
-        plt.plot(x,y)
-        plt.title = choice_plot + "'s performance trend"
+            plt.plot(x,y)
+            plt.title = choice_plot + "'s performance trend"
 
-        plt.gcf().autofmt_xdate()
+            plt.gcf().autofmt_xdate()
 
-        plt.show()
+            plt.show()
+            Panel(self.root, self.frame, self.username)
 
 
 
