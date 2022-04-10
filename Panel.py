@@ -83,7 +83,7 @@ class Panel:
             "Foreward"
         ]
 
-        Label(frame, text="Modify your team:", font=myFont).grid(row=3, column=1)
+        Label(frame, text="Insert new players to your team:", font=myFont).grid(row=3, column=1)
         Label(frame, text=" ").grid(row=3,column=0)
 
 
@@ -149,6 +149,7 @@ class Panel:
         space_label5 = Label(frame, text="\n" + "\n")
         space_label5.grid(row=11, column=1)
 
+
         stmt_plot = "SELECT Name FROM players WHERE Username = %s"
         data_plot = [str(self.username)]
         db.mycursor.execute(stmt_plot, data_plot)
@@ -165,7 +166,7 @@ class Panel:
             clicked_plot.set("Select the player")
             drop_plot = OptionMenu(frame, clicked_plot, *options_plot)
             drop_plot.grid(row=10, column=1)
-            trend_button = Button(frame, text="View a player's performance trend", padx=25, pady=10, bg="#1d434e",
+            trend_button = Button(frame, text="View a player's ratings history series", padx=25, pady=10, bg="#1d434e",
                                   fg="white", font=myFont2,
                                   command=lambda: self.plot_trend(self.username, clicked_plot.get()))
             trend_button.grid(row=10, column=2)
@@ -215,7 +216,7 @@ class Panel:
             ax.plot(x, y, marker='o')
             plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
             plt.gca().xaxis.set_major_locator(mdates.DayLocator())
-            ax.set_title(choice_plot + "'s performance trend")
+            ax.set_title(choice_plot + "'s ratings")
             plt.gcf().autofmt_xdate()
             fig.show()
 

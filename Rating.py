@@ -1,15 +1,16 @@
-from datetime import datetime
+
 from tkinter import *
 import tkinter.font as font
 from tkinter import ttk
+
 
 from PIL import ImageTk, Image
 
 from database import Database
 import pickle
 from tkinter import messagebox
-from tkcalendar import Calendar, DateEntry
-from sklearn import model_selection
+from tkcalendar import DateEntry
+
 
 
 db = Database()
@@ -101,11 +102,6 @@ class Rating:
         drop.grid(row=2, column=1)
 
 
-
-        #cal = DateEntry(self.frame_empty,width=12, year=2022, month=4, day=11, background='darkblue', foreground='white', borderwidth=2)
-        #print(type(cal.get_date()))
-
-        #cal.grid(row=0, column=0)
 
 
     def select_player(self, choice):
@@ -287,9 +283,9 @@ class Rating:
 
         Label(self.third_frame, text="\n").grid(row=14, column=1)
 
-        Label(self.third_frame, text="Flow" + "\n" + "centrality", font=self.myFont2).grid(row=12, column=4)
-        flow_centrality = Entry(self.third_frame, width=10, font=self.myFont2)
-        flow_centrality.grid(row=13, column=4)
+        Label(self.third_frame, text="# actions in which" + "\n" + "player is involved", font=self.myFont2).grid(row=12, column=4)
+        actions_involved = Entry(self.third_frame, width=10, font=self.myFont2)
+        actions_involved.grid(row=13, column=4)
 
         Label(self.third_frame, text="Goals against"+"\n"+"outside the box", font=self.myFont2).grid(row=15, column=4)
         goals_ag_otb = Entry(self.third_frame, width=5, font=self.myFont2)
@@ -304,9 +300,14 @@ class Rating:
                             foreground='white', borderwidth=2)
         cal_mov.grid(row=1, column=0)
 
-        Label(self.third_frame, text="Flow" + "\n" + "success", font=self.myFont2).grid(row=12, column=6)
-        flow_success = Entry(self.third_frame, width=10, font=self.myFont2)
-        flow_success.grid(row=13, column=6)
+        Label(self.third_frame, text="# actions which end with"+"\n"+"a shot where"+"\n"+ "player is involved", font=self.myFont2).grid(row=12, column=6)
+        actions_shot = Entry(self.third_frame, width=10, font=self.myFont2)
+        actions_shot.grid(row=13, column=6)
+
+        Label(self.third_frame, text="# Total actions of the team",
+              font=self.myFont2).grid(row=18, column=4)
+        actions_total = Entry(self.third_frame, width=10, font=self.myFont2)
+        actions_total.grid(row=19, column=4)
 
         Label(self.third_frame, text="Goals against" + "\n" + "inside the box", font=self.myFont2).grid(row=15,column=6)
         goals_ag_itb = Entry(self.third_frame, width=5, font=self.myFont2)
@@ -343,7 +344,7 @@ class Rating:
         starter_var = IntVar()
         starter = Checkbutton(self.third_frame, text="Starter", font=self.myFont2, variable=starter_var, onvalue=1,
                               offvalue=0, anchor=E)
-        starter.grid(row=18, column=4)
+        starter.grid(row=20, column=0)
 
         Label(self.third_frame,
               text="\n" + "\n" + "\n" + "\n").grid(
@@ -362,7 +363,7 @@ class Rating:
                                     int(interceptions.get()),
                                     int(tackles.get()), varyellow.get(), var.get(),
                                     int(owngoals.get()),
-                                    float(flow_centrality.get()), float(flow_success.get()),
+                                    int(actions_involved.get()), int(actions_total.get()), int(actions_shot.get()),
                                     win_var.get(),
                                     lost_var.get(),
                                     starter_var.get(), choice, role,
@@ -377,138 +378,9 @@ class Rating:
 
 
 
-
-
-        """Label(self.third_frame, text="Assists",font=self.myFont2).grid(row=0, column=2)
-        assists = Entry(self.third_frame, width=5, font=self.myFont2)
-        assists.grid(row=1, column=2)
-
-        Label(self.third_frame,
-              text="                                                    ").grid(
-            row=0, column=1)
-
-        Label(self.third_frame, text="Ground duels won", font=self.myFont2).grid(row=9, column=2)
-        grduels_w = Entry(self.third_frame, width=5, font=self.myFont2)
-        grduels_w.grid(row=10, column=2)
-
-        Label(self.third_frame,
-              text="                                                    ").grid(
-            row=0, column=3)
-
-
-        Label(self.third_frame,
-              text="                                                    ").grid(
-            row=0, column=5)
-
-        Label(self.third_frame, text="Aerials won", font=self.myFont2).grid(row=0, column=4)
-        aerials_w = Entry(self.third_frame, width=5, font=self.myFont2)
-        aerials_w.grid(row=1, column=4)
-
-        Label(self.third_frame, text="\n"+"\n"+"\n"+"\n").grid(row=2, column=1)
-
-        Label(self.third_frame, text="Aerials lost", font=self.myFont2).grid(row=0, column=6)
-        aerials_l = Entry(self.third_frame, width=5, font=self.myFont2)
-        aerials_l.grid(row=1, column=6)
-
-        Label(self.third_frame,
-              text="                                                    ").grid(
-            row=3, column=1)
-
-        Label(self.third_frame, text="Dangerous mistakes", font=self.myFont2).grid(row=3, column=0)
-        d_mistakes = Entry(self.third_frame, width=5, font=self.myFont2)
-        d_mistakes.grid(row=4, column=0)
-
-        Label(self.third_frame,
-              text="                                                    ").grid(
-            row=3, column=3)
-
-        Label(self.third_frame, text="Goals against"+"\n"+"outside the box", font=self.myFont2).grid(row=3, column=2)
-        goals_ag_otb = Entry(self.third_frame, width=5, font=self.myFont2)
-        goals_ag_otb.grid(row=4, column=2)
-
-        Label(self.third_frame,
-              text="                                                    ").grid(
-            row=3, column=5)
-
-        Label(self.third_frame, text="Goals against" + "\n" + "inside the box", font=self.myFont2).grid(row=3, column=4)
-        goals_ag_itb = Entry(self.third_frame, width=5, font=self.myFont2)
-        goals_ag_itb.grid(row=4, column=4)
-
-        Label(self.third_frame, text="\n"+"\n"+"\n"+"\n").grid(row=5, column=1)
-
-        Label(self.third_frame, text="Saves inside the box", font=self.myFont2).grid(row=3, column=6)
-        saves_itb = Entry(self.third_frame, width=5, font=self.myFont2)
-        saves_itb.grid(row=4, column=6)
-
-        Label(self.third_frame,
-              text="                                                    ").grid(
-            row=6, column=1)
-
-        Label(self.third_frame, text="Saves outside the box", font=self.myFont2).grid(row=6, column=0)
-        saves_otb = Entry(self.third_frame, width=5, font=self.myFont2)
-        saves_otb.grid(row=7, column=0)
-
-        Label(self.third_frame,
-              text="                                                    ").grid(
-            row=6, column=3)
-
-        Label(self.third_frame, text="Saved penalties", font=self.myFont2).grid(row=6, column=2)
-        saved_pen = Entry(self.third_frame, width=5, font=self.myFont2)
-        saved_pen.grid(row=7, column=2)
-
-        Label(self.third_frame, text="Select the date of the match").grid(row=0, column=0)
-        cal_gk = DateEntry(self.third_frame, width=12, year=2022, month=4, day=11, background='darkblue',
-                            foreground='white', borderwidth=2)
-        cal_gk.grid(row=1, column=0)
-
-        Label(self.third_frame,
-              text="                                                    ").grid(
-            row=6, column=5)
-
-        Label(self.third_frame, text="Betweennes centrality", font=self.myFont2).grid(row=6, column=4)
-        betweennes_centrality = Entry(self.third_frame, width=10, font=self.myFont2)
-        betweennes_centrality.grid(row=7, column=4)
-
-        Label(self.third_frame, text="Flow centrality", font=self.myFont2).grid(row=6, column=6)
-        flow_centrality = Entry(self.third_frame, width=10, font=self.myFont2)
-        flow_centrality.grid(row=7, column=6)
-
-
-
-        Label(self.third_frame, text="\n" + "\n" + "\n" + "\n").grid(row=8, column=0)
-
-        lost_var = IntVar()
-        lost = Checkbutton(self.third_frame, text="Lost", font=self.myFont2, variable=lost_var, onvalue=1,
-                           offvalue=0)
-        lost.grid(row=9, column=0)
-
-        Label(self.third_frame, text="\n").grid(row=10, column=0)
-
-        Button(self.third_frame, text="Compute the rating", font=self.myFont3, padx=25, pady=5, bg="#3bab5a",
-               fg="white", command=lambda: self.compute_rating_gk(int(assists.get()), int(grduels_w.get()),
-                                                               int(aerials_w.get()), int(aerials_l.get()), int(d_mistakes.get()), int(goals_ag_otb.get()), int(goals_ag_itb.get()), int(saves_itb.get()), int(saves_otb.get()), int(saved_pen.get()), float(betweennes_centrality.get()), float(flow_centrality.get()),
-                                                               lost_var.get(), choice, role, cal_gk.get_date())).grid(row=11,column=3)"""
-
         self.frame_mov.grid_forget()
         self.frame_gk.grid(row=3, column=1)
         self.frame_gk.tkraise()
-
-
-
-    """def compute_rating_gk(self, assists, grduels_w,aerials_w,aerials_l, d_mistakes, goals_ag_otb,goals_ag_itb, saves_itb, saves_otb, saved_pen, b_centrality, flow_centrality, lost, choice, role, cal_gk):
-            input_data_gk = [[assists, grduels_w,aerials_w,aerials_l, d_mistakes, goals_ag_otb,goals_ag_itb, saves_itb, saves_otb, saved_pen, b_centrality, flow_centrality, lost]]
-
-            result_gk = self.model_gk.predict(input_data_gk)
-
-            text_final_gk = f"The rating is {result_gk[0]}"
-
-            messagebox.showinfo("Rating result", text_final_gk)
-
-            stmt5 = "INSERT INTO soccer_ratings.performance (`Username`, `Player`, `Date`, `rating`, `role`) VALUES (%s, %s, %s, %s, %s) "
-            data_insert = [self.username, choice, cal_gk, int(result_gk[0]), role]
-            db.mycursor.execute(stmt5, data_insert)"""
-
-
 
 
 
@@ -669,9 +541,14 @@ class Rating:
 
         Label(self.second_frame, text="\n").grid(row=14, column=1)
 
-        Label(self.second_frame, text="Flow" + "\n" + "centrality", font=self.myFont2).grid(row=12, column=4)
-        flow_centrality = Entry(self.second_frame, width=10, font=self.myFont2)
-        flow_centrality.grid(row=13, column=4)
+        Label(self.second_frame, text="# actions in which" + "\n" + "player is involved", font=self.myFont2).grid(row=12, column=4)
+        actions_involved = Entry(self.second_frame, width=10, font=self.myFont2)
+        actions_involved.grid(row=13, column=4)
+
+        Label(self.second_frame, text="# actions which end with"+"\n"+"a shot where" + "\n" + "player is involved", font=self.myFont2).grid(
+            row=15, column=4)
+        actions_shot = Entry(self.second_frame, width=10, font=self.myFont2)
+        actions_shot.grid(row=16, column=4)
 
         Label(self.second_frame,
               text="                                                    ").grid(
@@ -682,9 +559,9 @@ class Rating:
                             foreground='white', borderwidth=2)
         cal_mov.grid(row=1, column=0)
 
-        Label(self.second_frame, text="Flow" + "\n" + "success", font=self.myFont2).grid(row=12, column=6)
-        flow_success = Entry(self.second_frame, width=10, font=self.myFont2)
-        flow_success.grid(row=13, column=6)
+        Label(self.second_frame, text="# total actions" + "\n" + "of team", font=self.myFont2).grid(row=12, column=6)
+        total_actions = Entry(self.second_frame, width=10, font=self.myFont2)
+        total_actions.grid(row=13, column=6)
 
         Label(self.second_frame,
               text="                                                    ").grid(
@@ -722,16 +599,7 @@ class Rating:
               text="\n" + "\n" + "\n" + "\n").grid(
             row=20, column=1)
 
-        """Button(self.second_frame, text="Compute the rating", font=self.myFont3, padx=25, pady=5, bg="#3bab5a",
-               fg="white", command=lambda: self.compute_rating(int(goals.get()),
-                                               int(assists.get()), int(shotsont.get()),int(dribblings.get()), int(keypasses.get()),
-                                               int(touches.get()), int(passes_acc.get()), int(crosses_acc.get()), int(lballs_acc.get()), int(grduels_w.get()),
-                                               int(aerials_w.get()), int(poss_lost.get()),
-                                               int(clearances.get()), int(stop_shots.get()), int(interceptions.get()),
-                                               int(tackles.get()), varyellow.get(), var.get(),  int(owngoals.get()),
-                                               float(flow_centrality.get()), float(flow_success.get()), win_var.get(),
-                                               lost_var.get(),
-                                               starter_var.get(), choice, role, cal_mov.get_date(), 0,0,0,0,0,0)).grid(row=20, column=3)"""
+
         def call_compute_rating():
             try:
                 self.compute_rating(int(goals.get()),
@@ -740,7 +608,7 @@ class Rating:
                int(aerials_w.get()), int(poss_lost.get()),
                int(clearances.get()), int(stop_shots.get()), int(interceptions.get()),
                int(tackles.get()), varyellow.get(), var.get(),  int(owngoals.get()),
-               float(flow_centrality.get()), float(flow_success.get()), win_var.get(),
+               int(actions_involved.get()), int(total_actions.get()), int(actions_shot.get()), win_var.get(),
                lost_var.get(),
                starter_var.get(), choice, role, cal_mov.get_date(), 0,0,0,0,0,0)
             except:
@@ -758,8 +626,20 @@ class Rating:
 
     def compute_rating(self, goals, assists, shotsont, dribblings, keypasses, touches, passes_acc, crosses_acc,
                        lballs_acc, grduels_w, aerials_w, poss_lost_w, clearances, stop_shots, interceptions, tackles,
-                       ycards, rcards, owngoals, flow_centrality, flow_success,
+                       ycards, rcards, owngoals, actions_involved, total_actions, actions_shot,
                        win, lost, starter, choice, role, date_mov, goals_ag_otb, goals_ag_itb, saves_itb, saves_otb, saved_pen, GK):
+
+        flow_centrality = actions_involved/total_actions
+
+        if(role == 'Goalkeeper'):
+            flow_success = (actions_shot/total_actions) * 0.042
+        elif(role == 'Defender'):
+            flow_success = (actions_shot / total_actions) * 0.073
+        elif(role == 'Midfielder'):
+            flow_success = (actions_shot / total_actions) * 0.113
+        else:
+            flow_success = (actions_shot / total_actions) * 0.159
+
         input_data = [[goals, assists, shotsont, dribblings, keypasses, touches, passes_acc, crosses_acc,
                        lballs_acc, grduels_w, aerials_w, poss_lost_w, clearances, stop_shots, interceptions, tackles, ycards,
                        rcards,goals_ag_otb,goals_ag_itb,saves_itb,saves_otb,saved_pen, owngoals, flow_centrality, flow_success,
@@ -769,7 +649,7 @@ class Rating:
         result = self.model.predict(input_data)
         #print(input_data)
 
-        text_final = f"The rating is {result[0]}"
+        text_final = f"The rating is {int(result[0])}"
 
         messagebox.showinfo("Rating result", text_final)
 
