@@ -349,23 +349,31 @@ class Rating:
               text="\n" + "\n" + "\n" + "\n").grid(
             row=20, column=1)
 
+        def call_compute_rating_gk():
+            try:
+                self.compute_rating(int(goals.get()),
+                                    int(assists.get()), int(shotsont.get()),
+                                    int(dribblings.get()), int(keypasses.get()),
+                                    int(touches.get()), int(passes_acc.get()),
+                                    int(crosses_acc.get()), int(lballs_acc.get()),
+                                    int(grduels_w.get()),
+                                    int(aerials_w.get()), int(poss_lost.get()),
+                                    int(clearances.get()), int(stop_shots.get()),
+                                    int(interceptions.get()),
+                                    int(tackles.get()), varyellow.get(), var.get(),
+                                    int(owngoals.get()),
+                                    float(flow_centrality.get()), float(flow_success.get()),
+                                    win_var.get(),
+                                    lost_var.get(),
+                                    starter_var.get(), choice, role,
+                                    cal_mov.get_date(), int(goals_ag_otb.get()), int(goals_ag_itb.get()),
+                                    int(saves_itb.get()), int(saves_otb.get()), int(saved_pen.get()), 1)
+                print("ok")
+            except:
+                messagebox.showerror("Error","Please, make sure you have entered all fields correctly")
+
         Button(self.third_frame, text="Compute the rating", font=self.myFont3, padx=25, pady=5, bg="#3bab5a",
-               fg="white", command=lambda: self.compute_rating(int(goals.get()),
-                                                               int(assists.get()), int(shotsont.get()),
-                                                               int(dribblings.get()), int(keypasses.get()),
-                                                               int(touches.get()), int(passes_acc.get()),
-                                                               int(crosses_acc.get()), int(lballs_acc.get()),
-                                                               int(grduels_w.get()),
-                                                               int(aerials_w.get()), int(poss_lost.get()),
-                                                               int(clearances.get()), int(stop_shots.get()),
-                                                               int(interceptions.get()),
-                                                               int(tackles.get()), varyellow.get(), var.get(),
-                                                               int(owngoals.get()),
-                                                               float(flow_centrality.get()), float(flow_success.get()),
-                                                               win_var.get(),
-                                                               lost_var.get(),
-                                                               starter_var.get(), choice, role,
-                                                               cal_mov.get_date(), int(goals_ag_otb.get()), int(goals_ag_itb.get()), int(saves_itb.get()), int(saves_otb.get()), int(saved_pen.get()),1)).grid(row=22, column=3)
+               fg="white", command=call_compute_rating_gk).grid(row=22, column=3)
 
 
 
@@ -714,16 +722,36 @@ class Rating:
               text="\n" + "\n" + "\n" + "\n").grid(
             row=20, column=1)
 
-        Button(self.second_frame, text="Compute the rating", font=self.myFont3, padx=25, pady=5, bg="#3bab5a",
+        """Button(self.second_frame, text="Compute the rating", font=self.myFont3, padx=25, pady=5, bg="#3bab5a",
                fg="white", command=lambda: self.compute_rating(int(goals.get()),
-                                                               int(assists.get()), int(shotsont.get()),int(dribblings.get()), int(keypasses.get()),
-                                                               int(touches.get()), int(passes_acc.get()), int(crosses_acc.get()), int(lballs_acc.get()), int(grduels_w.get()),
-                                                               int(aerials_w.get()), int(poss_lost.get()),
-                                                               int(clearances.get()), int(stop_shots.get()), int(interceptions.get()),
-                                                               int(tackles.get()), varyellow.get(), var.get(),  int(owngoals.get()),
-                                                               float(flow_centrality.get()), float(flow_success.get()), win_var.get(),
-                                                               lost_var.get(),
-                                                               starter_var.get(), choice, role, cal_mov.get_date(), 0,0,0,0,0,0)).grid(row=20, column=3)
+                                               int(assists.get()), int(shotsont.get()),int(dribblings.get()), int(keypasses.get()),
+                                               int(touches.get()), int(passes_acc.get()), int(crosses_acc.get()), int(lballs_acc.get()), int(grduels_w.get()),
+                                               int(aerials_w.get()), int(poss_lost.get()),
+                                               int(clearances.get()), int(stop_shots.get()), int(interceptions.get()),
+                                               int(tackles.get()), varyellow.get(), var.get(),  int(owngoals.get()),
+                                               float(flow_centrality.get()), float(flow_success.get()), win_var.get(),
+                                               lost_var.get(),
+                                               starter_var.get(), choice, role, cal_mov.get_date(), 0,0,0,0,0,0)).grid(row=20, column=3)"""
+        def call_compute_rating():
+            try:
+                self.compute_rating(int(goals.get()),
+               int(assists.get()), int(shotsont.get()),int(dribblings.get()), int(keypasses.get()),
+               int(touches.get()), int(passes_acc.get()), int(crosses_acc.get()), int(lballs_acc.get()), int(grduels_w.get()),
+               int(aerials_w.get()), int(poss_lost.get()),
+               int(clearances.get()), int(stop_shots.get()), int(interceptions.get()),
+               int(tackles.get()), varyellow.get(), var.get(),  int(owngoals.get()),
+               float(flow_centrality.get()), float(flow_success.get()), win_var.get(),
+               lost_var.get(),
+               starter_var.get(), choice, role, cal_mov.get_date(), 0,0,0,0,0,0)
+            except:
+                messagebox.showerror("Error","Please, make sure you have entered all fields correctly")
+
+        Button(self.second_frame, text="Compute the rating", font=self.myFont3, padx=25, pady=5, bg="#3bab5a",
+               fg="white", command= call_compute_rating).grid(row=20, column=3)
+
+
+
+
 
         self.frame_mov.grid(row=3, column=1)
         self.frame_mov.tkraise()

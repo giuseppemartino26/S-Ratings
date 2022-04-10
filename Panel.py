@@ -211,15 +211,15 @@ class Panel:
                 x.append(element[0])
                 y.append(element[1])
 
+            fig, ax = plt.subplots()
+            ax.plot(x, y, marker='o')
             plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
             plt.gca().xaxis.set_major_locator(mdates.DayLocator())
-
-            plt.plot(x,y)
-            plt.title = choice_plot + "'s performance trend"
-
+            ax.set_title(choice_plot + "'s performance trend")
             plt.gcf().autofmt_xdate()
+            fig.show()
 
-            plt.show()
+
             Panel(self.root, self.frame, self.username)
 
 
